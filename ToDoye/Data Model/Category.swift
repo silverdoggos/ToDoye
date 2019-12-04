@@ -1,5 +1,5 @@
 //
-//  Item.swift
+//  Category.swift
 //  ToDoye
 //
 //  Created by Артём Шишкин on 04.12.2019.
@@ -7,9 +7,3 @@
 //
 
 import Foundation
-import RealmSwift
-
-class Item: Object{
-    @objc dynamic var title: String = ""
-    @objc dynamic var done: Bool = false
-}
