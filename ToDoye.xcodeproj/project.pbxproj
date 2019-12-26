@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		865CFCCD238E90E200BEA770 /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 865CFCCB238E90E200BEA770 /* DataModel.xcdatamodeld */; };
+		863966FC23B4D336008B3022 /* SwipeTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 863966FB23B4D336008B3022 /* SwipeTableViewController.swift */; };
 		865CFCF22390248C00BEA770 /* CategoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 865CFCF12390248C00BEA770 /* CategoryViewController.swift */; };
 		868FE6302397BBFE001AF8E8 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 868FE62F2397BBFE001AF8E8 /* Item.swift */; };
 		868FE6322397BC08001AF8E8 /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = 868FE6312397BC08001AF8E8 /* Category.swift */; };
@@ -23,7 +23,7 @@
 /* Begin PBXFileReference section */
 		304E043F57BED6B5E9B9966C /* Pods_ToDoye.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ToDoye.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		62BE6BEB8E6D50657BCBF825 /* Pods-ToDoye.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ToDoye.release.xcconfig"; path = "Target Support Files/Pods-ToDoye/Pods-ToDoye.release.xcconfig"; sourceTree = "<group>"; };
-		865CFCCC238E90E200BEA770 /* DataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DataModel.xcdatamodel; sourceTree = "<group>"; };
+		863966FB23B4D336008B3022 /* SwipeTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipeTableViewController.swift; sourceTree = "<group>"; };
 		865CFCF12390248C00BEA770 /* CategoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryViewController.swift; sourceTree = "<group>"; };
 		868FE62F2397BBFE001AF8E8 /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
 		868FE6312397BC08001AF8E8 /* Category.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
@@ -94,9 +94,8 @@
 		86A36B20238816A500E74D43 /* Data Model */ = {
 			isa = PBXGroup;
 			children = (
-				865CFCCB238E90E200BEA770 /* DataModel.xcdatamodeld */,
-				868FE62F2397BBFE001AF8E8 /* Item.swift */,
 				868FE6312397BC08001AF8E8 /* Category.swift */,
+				868FE62F2397BBFE001AF8E8 /* Item.swift */,
 			);
 			path = "Data Model";
 			sourceTree = "<group>";
@@ -106,6 +105,7 @@
 			children = (
 				865CFCF12390248C00BEA770 /* CategoryViewController.swift */,
 				86A36B0E2387F73B00E74D43 /* TodoListViewController.swift */,
+				863966FB23B4D336008B3022 /* SwipeTableViewController.swift */,
 			);
 			path = Conrollers;
 			sourceTree = "<group>";
@@ -235,9 +235,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				865CFCF22390248C00BEA770 /* CategoryViewController.swift in Sources */,
-				865CFCCD238E90E200BEA770 /* DataModel.xcdatamodeld in Sources */,
 				86A36B0F2387F73B00E74D43 /* TodoListViewController.swift in Sources */,
 				86A36B0B2387F73B00E74D43 /* AppDelegate.swift in Sources */,
+				863966FC23B4D336008B3022 /* SwipeTableViewController.swift in Sources */,
 				868FE6302397BBFE001AF8E8 /* Item.swift in Sources */,
 				86A36B0D2387F73B00E74D43 /* SceneDelegate.swift in Sources */,
 				868FE6322397BC08001AF8E8 /* Category.swift in Sources */,
@@ -440,19 +440,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCVersionGroup section */
-		865CFCCB238E90E200BEA770 /* DataModel.xcdatamodeld */ = {
-			isa = XCVersionGroup;
-			children = (
-				865CFCCC238E90E200BEA770 /* DataModel.xcdatamodel */,
-			);
-			currentVersion = 865CFCCC238E90E200BEA770 /* DataModel.xcdatamodel */;
-			path = DataModel.xcdatamodeld;
-			sourceTree = "<group>";
-			versionGroupType = wrapper.xcdatamodel;
-		};
-/* End XCVersionGroup section */
 	};
 	rootObject = 86A36AFF2387F73B00E74D43 /* Project object */;
 }

@@ -7,31 +7,65 @@
 //
 
 import UIKit
-import CoreData
+import RealmSwift
+import SwipeCellKit
+import ChameleonFramework
 
-class CategoryViewController: UITableViewController {
+ 
+class CategoryViewController: SwipeTableViewController{
     
-    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-    
-    var categoriesArray = [Category]()
+    let realm = try! Realm()
+    var categories: Results<Category>?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         loadData()
-    
+        tableView.separatorStyle = .none
+        tableView.rowHeight = 80.0
+
     }
-    //MARK: - TableView Datasource Methods
+    
+override func viewWillAppear(_ animated: Bool) {
+    guard let navBar = navigationController?.navigationBar else { fatalError("Navigation controller does not exist.")
+    }
+    
+    if #available(iOS 13.0, *) {
+        let appearance = UINavigationBarAppearance().self
+                        
+        appearance.backgroundColor = UIColor(hexString: "34C759")
+        appearance.largeTitleTextAttributes = [
+            NSAttributedString.Key.foregroundColor: ContrastColorOf(UIColor(hexString: "34C759")!, returnFlat: true)]
+     
+        navBar.standardAppearance = appearance
+        navBar.compactAppearance = appearance
+        navBar.scrollEdgeAppearance = appearance
+        navBar.tintColor = ContrastColorOf(UIColor(hexString: "34C759")!, returnFlat: true)
+                        
+    } else {
+        navBar.barTintColor = UIColor(hexString: "34C759")
+        navBar.tintColor = ContrastColorOf(UIColor(hexString: "34C759")!, returnFlat: true)
+        navBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: ContrastColorOf(UIColor(hexString: "34C759")!, returnFlat: true)]
+    }
+}
+    
+   //MARK: - TableView Datasource Methods
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return categoriesArray.count
+        return categories?.count ?? 1
     }
     
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "toDoCategoriesCell", for: indexPath)
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell { 
         
-        let item = categoriesArray[indexPath.row]
-        cell.textLabel?.text = item.name
+        let cell = super.tableView(tableView, cellForRowAt: indexPath)
+        
+        cell.textLabel?.text = categories?[indexPath.row].name ?? "No categories added yet"
+        
+       if let category = categories?[indexPath.row] {
+             guard let categoryColour = UIColor(hexString: category.color) else {fatalError()}
+             cell.backgroundColor = categoryColour
+             cell.textLabel?.textColor = ContrastColorOf(categoryColour, returnFlat: true)
+         }
         
         return cell
     }
@@ -44,7 +78,7 @@ class CategoryViewController: UITableViewController {
         let destinationVC = segue.destination as! TodoListViewController
         
         if let indexPath = tableView.indexPathForSelectedRow {
-            destinationVC.selectedCategory = categoriesArray[indexPath.row]
+            destinationVC.selectedCategory = categories?[indexPath.row]
         }
     }
 
@@ -58,11 +92,12 @@ class CategoryViewController: UITableViewController {
         let alert = UIAlertController(title: "Add new Category", message: "", preferredStyle: .alert)
         let action = UIAlertAction(title: "Add category", style: .default) { (action) in
             
-            let newItem = Category(context: self.context)
-            newItem.name = textField.text!
-            self.categoriesArray.append(newItem)
+            let newCategory = Category()
             
-            self.saveCategories()
+            newCategory.color = UIColor.randomFlat().hexValue()
+            newCategory.name = textField.text!
+             
+            self.save(category: newCategory)
             
             self.tableView.reloadData()
             
@@ -80,22 +115,40 @@ class CategoryViewController: UITableViewController {
     //MARK: - data Manipulation Methods
     
 
-    func saveCategories(){
+    func save(category: Category){
         
         do {
-            try context.save()
+            try realm.write {
+                realm.add(category)
+            }
         } catch {
             print("Error with saving data to core data")
         }
     }
     
-    func loadData(with request: NSFetchRequest<Category> = Category.fetchRequest()) {
-        do {
-            categoriesArray = try context.fetch(request)
-        } catch {
-            print( "Error fetching data from contex \(error)")
-        }
+    func loadData() {
+        categories = realm.objects(Category.self)
+        
         tableView.reloadData()
     }
+    
+    //MARK: - delete Data from Swipe
+    
+    override func updateModel(at indexPath: IndexPath) {
+        if let item = self.categories?[indexPath.row]{
+            do{
+                try self.realm.write {
+                    self.realm.delete(item)
+                }
+            }catch {
+                print("Error deleting category, \(error)")
+            }
+            
+        }
+    }
+    
+    
 
 }
+
+
